@@ -49,5 +49,6 @@ $app->error(function(\Exception $e) use($app) {
 $app->get('/hello', '\\App\\Controllers\\API::hello');
 $app->get('/test', '\\App\\Controllers\\API::test');
 $app->get('/test/{key}', '\\App\\Controllers\\API::test');
+$app->get('/', '\\App\\Controllers\\API::testEntry');
 
 $app->run();

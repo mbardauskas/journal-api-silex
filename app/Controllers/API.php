@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @TODO: Move to a separate component
+ */
 namespace App\Controllers;
 
 use Silex\Application;
@@ -19,5 +22,10 @@ class API {
 		);
 
 		return $app->json($data);
+	}
+
+	static public function testEntry(Request $request, Application $app) {
+		$entryList = EntryController::actionList();
+		return $app->json($entryList);
 	}
 }
