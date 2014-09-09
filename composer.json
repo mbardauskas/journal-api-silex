@@ -11,7 +11,8 @@
 	"require": {
 		"silex/silex": "~1.2",
 		"monolog/monolog": "~1.10",
-		"jdesrosiers/silex-cors-provider": "~0.1"
+		"jdesrosiers/silex-cors-provider": "~0.1",
+		"doctrine/dbal": "2.3.4"
 	},
 	"autoload": {
 		"psr-4": {
