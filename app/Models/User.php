@@ -5,35 +5,75 @@ namespace App\Models;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class User
+ * @package App\Models
+ */
 class User extends BaseModel {
 
 	static private $tableName = "silex_user";
 
+	/**
+	 * @return \App\Services\ModelService
+	 */
 	static public function Model() {
 		return parent::Model(self::$tableName);
 	}
 
-	public static function authenticate(Request $request, Application $app) {
-		$authorization = $request->headers->get('Authorization');
-		if(empty($authorization)) {
+	/**
+	 * Public authentication function.
+	 * @expects "METHOD HASH"
+	 * @param string $auth_string
+	 * @return bool
+	 */
+	static public function authenticate($auth_string) {
+		if(empty($auth_string)) {
 			return false;
 		}
 
-		/**
-		 * @TODO: move to different methods based on first argument of $encoded_array
-		 */
-		/*$encoded_array = explode(" ", $authorization);
-		$encoded_data = $encoded_array[1];
-		$auth_decoded = explode(":", base64_decode($encoded_data));
-		$auth_uid = $auth_decoded[0];
+		list($auth_method, $auth_encoded) = explode(" ", $auth_string);
 
-		$user = self::Model()->fetchByPk($auth_uid);*/
+		$method = "authenticate".$auth_method;
 
-		// always authenticaded for now
-		return true;
+		$class = get_class();
+		if(method_exists($class, $method)) {
+			return $class::$method($auth_encoded);
+		}
+
+		return false;
 	}
 
-	private function generate_public_key(array $data) {
+	/**
+	 * Basic authentication method
+	 * @param $auth_string
+	 * @return bool
+	 */
+	static private function authenticateBasic($auth_string) {
+		$auth_decoded = explode("::", base64_decode($auth_string));
+		list($uid, $public_key) = $auth_decoded;
 
+		$user = self::Model()->fetchByPk($uid);
+
+		if(empty($user)) {
+			return false;
+		}
+
+		if(self::generatePublicKey($user) === $public_key) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @param array $userModel
+	 * @return string
+	 */
+	static private function generatePublicKey(array $userModel) {
+		$data = array(
+			"secret_key" => $userModel['secret_key']
+		);
+		$json = json_encode($data);
+		return hash('sha256', $json);
 	}
 }

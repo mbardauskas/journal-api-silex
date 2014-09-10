@@ -9,8 +9,21 @@ $app['debug'] = true;
 use JDesrosiers\Silex\Provider\CorsServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Monolog\Logger;
+use App\Models\User;
 
-$app->before(function (Request $request) {
+$app->before(function (Request $request) use($app) {
+
+	/**
+	 * @TODO: move authorization to API component
+	 */
+	/*
+	$authorization = $request->headers->get('Authorization');
+
+	if(!User::authenticate($authorization)) {
+		return $app->json("Invalid authorization");
+	}
+	*/
+
 	if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
 		$data = json_decode($request->getContent(), true);
 		$request->request->replace(is_array($data) ? $data : []);
