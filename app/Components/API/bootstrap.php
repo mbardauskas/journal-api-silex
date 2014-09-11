@@ -13,8 +13,9 @@ $auth = function (Request $request) use($app) {
 	$authorization = $request->headers->get('Authorization');
 
 	if(!User::authenticate($authorization)) {
-		exit("Invalid authorization");
+		//uncomment when combined with JS app
+		//exit("Invalid authorization");
 	}
 };
 
-$app->get('/api/test', '\\App\\Controllers\\API::testAuth')->before($auth);
+$app->get('/api/', '\\App\\Components\\API\\Controllers\\EntryApi::actionList')->before($auth);

@@ -9,6 +9,11 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use App\Models\User;
 
+/**
+ * @TODO: Remove this test class
+ * Class API
+ * @package App\Controllers
+ */
 class API {
 	public static function hello(Request $request, Application $app) {
 		$data = array('data' => 'hello world');
@@ -23,11 +28,6 @@ class API {
 		);
 
 		return $app->json($data);
-	}
-
-	static public function testEntry(Request $request, Application $app) {
-		$entryList = EntryController::actionList();
-		return $app->json($entryList);
 	}
 
 	static public function testAuth(Request $request, Application $app) {
