@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use Silex\Application;
 use App\Models\Entry;
 
 /**

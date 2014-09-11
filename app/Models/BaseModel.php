@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Silex\Application;
 use App\Services\ModelService;
 
 /**

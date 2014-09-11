@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use Silex\Application;
-use Symfony\Component\HttpFoundation\Request;
-
 /**
  * Class User
  * @package App\Models

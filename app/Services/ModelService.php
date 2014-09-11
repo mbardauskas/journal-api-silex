@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Silex\Application;
 use Doctrine\DBAL\DriverManager;
 
 /**

@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Silex\Application;
-
 /**
  * Class Entry
  * @package App\Models
