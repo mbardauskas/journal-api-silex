@@ -11,6 +11,13 @@ use App\Controllers\EntryController;
  * @package App\Components\API\Controllers
  */
 class EntryApi extends BaseApi {
+
+	/**
+	 * Lists all entries
+	 * @param Request $request
+	 * @param Application $app
+	 * @return \Symfony\Component\HttpFoundation\JsonResponse
+	 */
 	static public function actionList(Request $request, Application $app) {
 		$entryList = EntryController::actionList();
 		return $app->json($entryList);
