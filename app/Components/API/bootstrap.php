@@ -18,4 +18,5 @@ $auth = function (Request $request) use($app) {
 	}
 };
 
-$app->get('/api/', '\\App\\Components\\API\\Controllers\\EntryApi::actionList')->before($auth);
+$app->get('/api/entries/', '\\App\\Components\\API\\Controllers\\EntryApi::actionList')->before($auth);
+$app->post('/api/login', '\\App\\Components\\API\\Controllers\\UserApi::actionLogin')->before($auth);
