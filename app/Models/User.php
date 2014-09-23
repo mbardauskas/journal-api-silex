@@ -63,6 +63,29 @@ class User extends BaseModel {
 	}
 
 	/**
+	 * Login the user
+	 * @param $username
+	 * @param $password
+	 * @return bool|string
+	 */
+	static public function login($username, $password) {
+		$user = self::Model()->fetchByField('username', $username);
+
+		if(empty($user)) {
+			return false;
+		}
+
+		if($user['password'] === $password) {
+			return json_encode(array(
+				'uid' => $user['id'],
+				'secret_key' => $user['secret_key'],
+			));
+		}
+
+		return false;
+	}
+
+	/**
 	 * @param array $userModel
 	 * @return string
 	 */

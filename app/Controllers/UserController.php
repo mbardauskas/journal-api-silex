@@ -12,9 +12,17 @@ use App\Models\User;
  */
 class UserController extends BaseController {
 
+	/**
+	 * Logins the user. Success returns data for user, failure returns false.
+	 * @param Request $request
+	 * @param Application $app
+	 * @return bool|string
+	 */
 	public static function actionLogin(Request $request, Application $app) {
-		$username = $request->get('LoginForm[username]');
-		$password = $request->get('LoginForm[password]');
-		return array($username, $password);
+		$loginForm = $request->request->get('LoginForm');
+		if(!empty($loginForm['username']) && !empty($loginForm['password'])) {
+			return User::login($loginForm['username'], $loginForm['password']);
+		}
+		return false;
 	}
 }

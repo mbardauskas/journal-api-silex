@@ -12,8 +12,13 @@ use App\Controllers\UserController;
  */
 class UserApi extends BaseApi {
 
+	/**
+	 * API Login
+	 * @param Request $request
+	 * @param Application $app
+	 * @return bool|string
+	 */
 	static public function actionLogin(Request $request, Application $app) {
-		//return UserController::actionLogin($request, $app);
-		return $app->json($request->get('LoginForm[username]'));
+		return UserController::actionLogin($request, $app);
 	}
 }
