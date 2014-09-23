@@ -46,8 +46,27 @@ class ModelService {
 	 * @return array
 	 */
 	public function fetchByPk($id) {
+		/**
+		 * @TODO: Make queries with queryBuilder
+		 */
 		$query = "SELECT * FROM {$this->table_name} WHERE id = ?";
 		$result = $this->db->fetchAssoc($query, array((int) $id));
+
+		return $result;
+	}
+
+	/**
+	 * Returns entries by field and its value.
+	 * @param $field_name
+	 * @param $field_value
+	 * @return array
+	 */
+	public function fetchByField($field_name, $field_value) {
+		/**
+		 * @TODO: Make queries with queryBuilder
+		 */
+		$query = "SELECT * FROM {$this->table_name} WHERE {$field_name} = :val";
+		$result = $this->db->fetchAssoc($query, array(':val' => $field_value));
 
 		return $result;
 	}
@@ -57,6 +76,9 @@ class ModelService {
 	 * @return array
 	 */
 	public function fetchAll() {
+		/**
+		 * @TODO: Make queries with queryBuilder
+		 */
 		$query = "SELECT * FROM {$this->table_name}";
 		$result = $this->db->fetchAll($query);
 
