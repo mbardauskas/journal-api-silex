@@ -71,9 +71,11 @@ class User extends BaseModel {
 	static public function login($username, $password) {
 		$user = self::Model()->fetchByField('username', $username);
 
-		if(empty($user)) {
+		if(empty($user[0])) {
 			return false;
 		}
+
+		$user = reset($user);
 
 		if($user['password'] === $password) {
 			return json_encode(array(

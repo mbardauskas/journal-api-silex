@@ -23,7 +23,8 @@ CREATE TABLE `silex_user` (
   `password` varchar(255) NOT NULL,
   `email` varchar(128) NOT NULL,
   `secret_key` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
