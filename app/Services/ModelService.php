@@ -62,11 +62,14 @@ class ModelService {
 	 * @return array
 	 */
 	public function fetchByField($field_name, $field_value) {
-		/**
-		 * @TODO: Make queries with queryBuilder
-		 */
-		$query = "SELECT * FROM {$this->table_name} WHERE {$field_name} = :val";
-		$result = $this->db->fetchAssoc($query, array(':val' => $field_value));
+		$queryBuilder = $this->db->createQueryBuilder();
+		$queryBuilder
+			->select('*')
+			->from($this->table_name, 't1')
+			->where('t1.'.$field_name.' = :val')
+			->setParameter(':val', $field_value)
+		;
+		$result = $queryBuilder->execute()->fetchAll();
 
 		return $result;
 	}
@@ -76,11 +79,12 @@ class ModelService {
 	 * @return array
 	 */
 	public function fetchAll() {
-		/**
-		 * @TODO: Make queries with queryBuilder
-		 */
-		$query = "SELECT * FROM {$this->table_name}";
-		$result = $this->db->fetchAll($query);
+		$queryBuilder = $this->db->createQueryBuilder();
+		$queryBuilder
+			->select('*')
+			->from($this->table_name, 't1')
+		;
+		$result = $queryBuilder->execute()->fetchAll();
 
 		return $result;
 	}
