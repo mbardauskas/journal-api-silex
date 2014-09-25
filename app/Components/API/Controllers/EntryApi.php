@@ -22,4 +22,17 @@ class EntryApi extends BaseApi {
 		$entryList = EntryController::actionList();
 		return $app->json($entryList);
 	}
+
+	/**
+	 * Inserts Entry to DB
+	 * @param Request $request
+	 * @param Application $app
+	 * @return \Symfony\Component\HttpFoundation\JsonResponse
+	 */
+	static public function actionInsert(Request $request, Application $app) {
+		$request_body = $request->getContent();
+		$request_array = json_decode($request_body, TRUE);
+
+		return $app->json(EntryController::actionInsert($request_array));
+	}
 }

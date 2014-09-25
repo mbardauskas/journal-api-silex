@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 
 /**
@@ -23,7 +24,7 @@ class ModelService {
 	);
 
 	/**
-	 * @var \Doctrine\DBAL\Connection
+	 * @var Connection
 	 */
 	private $db;
 
@@ -86,6 +87,21 @@ class ModelService {
 		;
 		$result = $queryBuilder->execute()->fetchAll();
 
+		return $result;
+	}
+
+	/**
+	 * Inserts model to the database.
+	 * @TODO: upgrade to dbal 2.5 and implement insert method
+	 * @param array $model Array of data which maps to database array
+	 * @return bool
+	 */
+	public function insert($model) {
+		$fields = implode('`, `', array_keys($model));
+		$values = array_values($model);
+		$query = "INSERT INTO {$this->table_name} (`{$fields}`) VALUES (?)";
+
+		$result = $this->db->executeQuery($query, array($values), array(Connection::PARAM_INT_ARRAY));
 		return $result;
 	}
 }
