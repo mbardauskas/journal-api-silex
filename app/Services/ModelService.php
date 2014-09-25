@@ -106,6 +106,41 @@ class ModelService {
 	}
 
 	/**
+	 * Updates DB entry
+	 * @param $id
+	 * @param $model
+	 * @return bool|mixed
+	 */
+	public function update($id, $model) {
+		/**
+		 * @TODO: Add checking of user and owner_id in the db, otherwise it is possible to change any user's entries
+		 */
+
+		if(!empty($model['id'])) {
+			if($model['id'] != $id) {
+				return false;
+			};
+
+			// otherwise it interferes with update query
+			unset($model['id']);
+		}
+
+		$queryBuilder = $this->db->createQueryBuilder();
+		$queryBuilder
+			->update($this->table_name)
+			->where("id = $id")
+		;
+
+		foreach($model as $model_key => $model_val) {
+			$queryBuilder->set($model_key, ":".$model_key);
+			$queryBuilder->setParameter($model_key, $model_val);
+		}
+
+		$result = $queryBuilder->execute();
+		return $result;
+	}
+
+	/**
 	 * Removes DB entry
 	 * @param $id
 	 * @return mixed

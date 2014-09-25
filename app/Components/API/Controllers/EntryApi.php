@@ -28,7 +28,7 @@ class EntryApi extends BaseApi {
 	 * @param Request $request
 	 * @param Application $app
 	 * @param null $id
-	 * @return bool
+	 * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
 	 */
 	static public function actionView(Request $request, Application $app, $id = null) {
 		if($id === null) {
@@ -56,7 +56,26 @@ class EntryApi extends BaseApi {
 	 * @param Request $request
 	 * @param Application $app
 	 * @param null $id
-	 * @return mixed
+	 * @return \Symfony\Component\HttpFoundation\JsonResponse
+	 */
+	static public function actionUpdate(Request $request, Application $app, $id = null) {
+		$request_body = $request->getContent();
+		$request_array = json_decode($request_body, TRUE);
+
+		if($id === null) {
+			$entryInsert = EntryController::actionInsert($request_array);
+		} else {
+			$entryInsert = EntryController::actionUpdate($id, $request_array);
+		}
+
+		return $app->json($entryInsert);
+	}
+
+	/**
+	 * @param Request $request
+	 * @param Application $app
+	 * @param null $id
+	 * @return mixed|\Symfony\Component\HttpFoundation\JsonResponse
 	 */
 	static public function actionDelete(Request $request, Application $app, $id = null) {
 		if($id === null) {

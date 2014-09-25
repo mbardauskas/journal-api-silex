@@ -38,6 +38,21 @@ class EntryController extends BaseController {
 	}
 
 	/**
+	 * Updates Entry in the DB
+	 * @param $id
+	 * @param $model
+	 * @return bool|mixed
+	 */
+	public static function actionUpdate($id, $model) {
+		$db_model = Entry::Model()->fetchByPk($id);
+		if(empty($db_model)) {
+			return Entry::Model()->insert($model);
+		}
+
+		return Entry::Model()->update($id, $model);
+	}
+
+	/**
 	 * @param $id
 	 * @return mixed
 	 */
