@@ -27,4 +27,12 @@ class EntryController extends BaseController {
 	public static function actionInsert($model) {
 		return Entry::Model()->insert($model);
 	}
+
+	/**
+	 * @param $id
+	 * @return mixed
+	 */
+	public static function actionDelete($id) {
+		return Entry::Model()->delete($id);
+	}
 }

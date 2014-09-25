@@ -104,4 +104,21 @@ class ModelService {
 		$result = $this->db->executeQuery($query, array($values), array(Connection::PARAM_INT_ARRAY));
 		return $result;
 	}
+
+	/**
+	 * Removes DB entry
+	 * @param $id
+	 * @return mixed
+	 */
+	public function delete($id) {
+		$queryBuilder = $this->db->createQueryBuilder();
+
+		$queryBuilder
+			->delete($this->table_name)
+			->where("id = $id")
+		;
+
+		$result = $queryBuilder->execute();
+		return $result;
+	}
 }

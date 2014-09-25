@@ -35,4 +35,19 @@ class EntryApi extends BaseApi {
 
 		return $app->json(EntryController::actionInsert($request_array));
 	}
+
+	/**
+	 * @param Request $request
+	 * @param Application $app
+	 * @param null $id
+	 * @return mixed
+	 */
+	static public function actionDelete(Request $request, Application $app, $id = null) {
+		if($id === null) {
+			return false;
+		}
+
+		$entryDelete = EntryController::actionDelete($id);
+		return $entryDelete;
+	}
 }

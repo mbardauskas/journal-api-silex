@@ -28,4 +28,5 @@ $auth = function (Request $request) use($app) {
 
 $app->get('/api/entries', '\\App\\Components\\API\\Controllers\\EntryApi::actionList')->before($auth);
 $app->post('/api/entries', '\\App\\Components\\API\\Controllers\\EntryApi::actionInsert')->before($auth);
+$app->delete('/api/entries/{id}', '\\App\\Components\\API\\Controllers\\EntryApi::actionDelete')->before($auth);
 $app->post('/api/login', '\\App\\Components\\API\\Controllers\\UserApi::actionLogin')->before($auth);
