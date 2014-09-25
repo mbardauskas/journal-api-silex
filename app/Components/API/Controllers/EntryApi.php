@@ -24,6 +24,22 @@ class EntryApi extends BaseApi {
 	}
 
 	/**
+	 * Show one Entry
+	 * @param Request $request
+	 * @param Application $app
+	 * @param null $id
+	 * @return bool
+	 */
+	static public function actionView(Request $request, Application $app, $id = null) {
+		if($id === null) {
+			return false;
+		}
+
+		$entryView = EntryController::actionView($id);
+		return $app->json($entryView);
+	}
+
+	/**
 	 * Inserts Entry to DB
 	 * @param Request $request
 	 * @param Application $app

@@ -20,6 +20,15 @@ class EntryController extends BaseController {
 	}
 
 	/**
+	 * Returns one Entry model
+	 * @param $id
+	 * @return array
+	 */
+	public static function actionView($id) {
+		return Entry::Model()->fetchByPk($id);
+	}
+
+	/**
 	 * Inserts Entry to DB
 	 * @param array $model Array which maps to database fields
 	 * @return bool
