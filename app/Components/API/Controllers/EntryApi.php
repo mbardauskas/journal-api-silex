@@ -5,6 +5,7 @@ namespace App\Components\API\Controllers;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use App\Controllers\EntryController;
+use App\Models\User;
 
 /**
  * Class EntryApi
@@ -61,11 +62,17 @@ class EntryApi extends BaseApi {
 	static public function actionUpdate(Request $request, Application $app, $id = null) {
 		$request_body = $request->getContent();
 		$request_array = json_decode($request_body, TRUE);
+		$entryInsert = 0;
 
 		if($id === null) {
 			$entryInsert = EntryController::actionInsert($request_array);
 		} else {
-			$entryInsert = EntryController::actionUpdate($id, $request_array);
+			$authorization = $request->headers->get('Authorization');
+			$uid = User::decodeAuthUid($authorization);
+
+			if($uid === $request_array['owner_id']) {
+				$entryInsert = EntryController::actionUpdate($id, $request_array);
+			}
 		}
 
 		return $app->json($entryInsert);

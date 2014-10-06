@@ -112,17 +112,10 @@ class ModelService {
 	 * @return bool|mixed
 	 */
 	public function update($id, $model) {
-		/**
-		 * @TODO: Add checking of user and owner_id in the db, otherwise it is possible to change any user's entries
-		 */
-
 		if(!empty($model['id'])) {
 			if($model['id'] != $id) {
 				return false;
 			};
-
-			// otherwise it interferes with update query
-			unset($model['id']);
 		}
 
 		$queryBuilder = $this->db->createQueryBuilder();

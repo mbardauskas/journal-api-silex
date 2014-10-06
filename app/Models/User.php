@@ -4,6 +4,7 @@ namespace App\Models;
 
 /**
  * Class User
+ * @TODO: Too many static methods - refactor.
  * @package App\Models
  */
 class User extends BaseModel {
@@ -60,6 +61,30 @@ class User extends BaseModel {
 		}
 
 		return false;
+	}
+
+	/**
+	 * @param $auth_string
+	 * @return bool
+	 */
+	static public function decodeAuthUid($auth_string) {
+		if(empty($auth_string)) {
+			return false;
+		}
+
+		list($auth_method, $auth_encoded) = explode(" ", $auth_string);
+		if(empty($auth_encoded)) {
+			return false;
+		}
+
+		$auth_decoded = explode("::", base64_decode($auth_encoded));
+		list($uid, $public_key) = $auth_decoded;
+
+		if(empty($uid)) {
+			return false;
+		}
+
+		return $uid;
 	}
 
 	/**
